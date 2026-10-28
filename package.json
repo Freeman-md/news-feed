@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
+    "test": "node --import tsx --test tests/unit/*.test.ts",
     "commitlint": "commitlint",
     "prepare": "husky"
   },
@@ -30,6 +31,7 @@
     "eslint-config-next": "16.4.3",
     "husky": "9.1.7",
     "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
     "typescript": "5.9.3"
   }
 }
