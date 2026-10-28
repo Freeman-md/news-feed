@@ -13,6 +13,9 @@
 - Do not create empty architecture folders or speculative abstractions.
 - Run relevant lint, TypeScript and build checks before completing a change.
 - Preserve existing work. Do not commit, push, merge or deploy without explicit instruction.
+- Use Conventional Commits for authored commits: `type: description` or `type(scope): description`, with an optional `!` before `:` for breaking changes.
+- Allowed commit types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. Use a concise description, no trailing period, and a header of at most 100 characters.
+- Validate commit messages with the configured commitlint rules. Do not bypass the commit-message hook.
 - Never inspect secret files or expose credentials. Non-secret example configuration may be inspected.
 - Keep `.agents/milestones/active.md` locally ignored. Use `milestone-workflow` only for “Run Active Milestone” and `milestone-authoring` when asked to create or revise a milestone.
 

@@ -31,6 +31,33 @@ works on a fresh checkout. Run `build` before `start`.
 TypeScript 5.9 and ESLint 9 match the Next.js lint plugins' declared compatibility.
 npm marks ESLint 9 unsupported; upgrade it when those plugins support ESLint 10.
 
+## Commit messages
+
+Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+`type(optional-scope): description`. For example:
+
+```text
+chore: enforce conventional commit messages
+docs(setup): clarify installation instructions
+```
+
+Allowed types are `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`,
+`build`, `ci`, `chore` and `revert`. Keep the header within 100 characters,
+start descriptions with a lowercase word, and omit the trailing period.
+Scopes are optional; use `!` before `:` or a `BREAKING CHANGE:` footer for
+breaking changes. Separate a body or footer from the header with a blank line.
+
+`npm ci` installs the local Husky `commit-msg` hook through the `prepare` script.
+The hook uses commitlint's conventional preset, including its standard exemptions
+for generated merge and revert messages. To check a message manually:
+
+```sh
+printf '%s\n' 'chore: update project tooling' | npm run --silent commitlint
+```
+
+Enforcement applies to new local commits. GitHub web commits and bypassed hooks
+require CI or repository rules for remote enforcement; those are not configured.
+
 ## Project structure and scope
 
 - `src/app/layout.tsx`: root document and metadata.

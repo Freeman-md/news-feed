@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "commitlint": "commitlint",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=22.13.0"
@@ -18,12 +20,15 @@
     "react-dom": "19.3.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "22.20.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.3",
+    "husky": "9.1.7",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3"
   }
