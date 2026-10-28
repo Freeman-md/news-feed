@@ -3,6 +3,7 @@
 - Implement only the assigned task.
 - Keep code and dependencies minimal.
 - Use PascalCase for component filenames and component names (for example, `PostCard.tsx` and `PostCard`). Keep Next.js convention files such as `page.tsx` and `layout.tsx` named as required by the framework.
+- Keep `src/app/globals.css` readable with section comments naming the owning component, file or shared purpose, blank lines between rules and one declaration per line; place component-specific updates in their labelled sections and general styling in shared sections.
 - Explain significant architectural choices.
 - Target architecture: View → Store → Data access → Server.
 - Views render state and trigger actions; data access owns networking and response normalization.
