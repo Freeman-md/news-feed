@@ -32,6 +32,14 @@ works on a fresh checkout. Run `build` before `start`.
 TypeScript 5.9 and ESLint 9 match the Next.js lint plugins' declared compatibility.
 npm marks ESLint 9 unsupported; upgrade it when those plugins support ESLint 10.
 
+## Task verification evidence
+
+Implementation tasks keep fresh browser screenshots and verification notes in
+`docs/screenshots/task-XX/`, committed with the task. Each folder's `README.md`
+records the verified revision, browser, mobile and desktop viewports, actual
+check results and limitations. See the [Task 2 evidence](docs/screenshots/task-02/README.md)
+for the visual shell and three routes.
+
 ## Commit messages
 
 Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
