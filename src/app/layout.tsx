@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { BottomNavigation } from "@/components/BottomNavigation";
+import { Header } from "@/components/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,10 +9,21 @@ export const metadata: Metadata = {
   description: "An incremental front-end system design learning project.",
 };
 
+export const viewport: Viewport = { viewportFit: "cover" };
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className="antialiased">
+      <body>
+        <div className="app-shell isolate">
+          <a href="#main-content" className="skip-link">Skip to content</a>
+          <Header />
+          <main id="main-content" className="page-content" tabIndex={-1}>
+            {children}
+          </main>
+          <BottomNavigation />
+        </div>
+      </body>
     </html>
   );
 }

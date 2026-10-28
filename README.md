@@ -13,8 +13,9 @@ npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). The page displays “NewsFeed” and
-“Project foundation ready”.
+Open [localhost:3000](http://localhost:3000). Three routes share the same header
+and bottom navigation: `/` (sample feed), `/create` (demo composer) and `/profile`
+(demo profile).
 
 ## Checks and production
 
@@ -60,12 +61,22 @@ require CI or repository rules for remote enforcement; those are not configured.
 
 ## Project structure and scope
 
-- `src/app/layout.tsx`: root document and metadata.
-- `src/app/page.tsx`: placeholder home page.
-- `src/app/globals.css`: Tailwind CSS entry point.
+- `src/app/layout.tsx`: shared root document, header, main region and navigation.
+- `src/app/{page,create/page,profile/page}.tsx`: assemble the three route views.
+- `src/app/globals.css`: Tailwind entry point, shared theme and responsive styles.
+- `src/components/`: header, navigation, post card, composer, initials avatar and icons.
+- `src/demo/content.ts`: fictional presentation samples, passed directly to views.
+- `public/samples/`: two locally bundled demo photos and their generation notes.
 
-The placeholder uses the default Server Component behavior. Future feed work
-will introduce client rendering and SPA navigation when assigned. The target
-architecture is View → Store → Data access → Server; no unused layers are created.
-Zustand will be installed when the shared store is implemented. Feed features,
-entity models, APIs, persistence and authentication are outside this task.
+Routes use the App Router and ordinary Next.js links. Only the navigation needs
+a Client Component, to read `usePathname` and expose the current route. The
+composer uses a native uncontrolled textarea: typing needs no React state or
+client boundary. Draft text is not persisted; browser or router restoration is
+not a draft-saving feature. Upload, Publish and Like controls are disabled.
+
+The target architecture remains View → Store → Data access → Server. This task
+adds views only; no entity models, shared store, networking, APIs, database,
+authentication or persistence are implemented. Zustand remains deferred.
+Five Heroicons SVG paths are bundled under their MIT license, without adding a
+package dependency. Glass styling is limited to the bottom navigation, with a
+near-opaque fallback and safe-area padding.
