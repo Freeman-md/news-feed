@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+.DS_Store
+
+# Keep local configuration and credentials out of version control.
+.env*
+!.env.example
+!.env.template
+*.pem
+*.key
+
+# Milestone contracts stay local; frozen contracts belong in PRs.
+.agents/milestones/active.md

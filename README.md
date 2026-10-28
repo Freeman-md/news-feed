@@ -1,0 +1,44 @@
+# NewsFeed
+
+An incremental front-end system design learning project. This foundation uses
+Next.js App Router, React, strict TypeScript, Tailwind CSS and ESLint with npm.
+
+## Setup
+
+Use Node.js 22.13 or newer (Node.js 22 LTS recommended) and npm.
+No environment variables or external services are required.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open [localhost:3000](http://localhost:3000). The page displays “NewsFeed” and
+“Project foundation ready”.
+
+## Checks and production
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm start
+```
+
+`typecheck` generates Next.js route types before running TypeScript, so it also
+works on a fresh checkout. Run `build` before `start`.
+
+TypeScript 5.9 and ESLint 9 match the Next.js lint plugins' declared compatibility.
+npm marks ESLint 9 unsupported; upgrade it when those plugins support ESLint 10.
+
+## Project structure and scope
+
+- `src/app/layout.tsx`: root document and metadata.
+- `src/app/page.tsx`: placeholder home page.
+- `src/app/globals.css`: Tailwind CSS entry point.
+
+The placeholder uses the default Server Component behavior. Future feed work
+will introduce client rendering and SPA navigation when assigned. The target
+architecture is View → Store → Data access → Server; no unused layers are created.
+Zustand will be installed when the shared store is implemented. Feed features,
+entity models, APIs, persistence and authentication are outside this task.

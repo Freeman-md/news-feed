@@ -1,0 +1,27 @@
+# NewsFeed project rules
+
+- Implement only the assigned task.
+- Keep code and dependencies minimal.
+- Explain significant architectural choices.
+- Target architecture: View → Store → Data access → Server.
+- Views render state and trigger actions; data access owns networking and response normalization.
+- Shared entity types belong outside data access.
+- Do not introduce competing copies of shared entity state.
+- Future feed work will use client rendering and SPA navigation; do not implement those behaviours in this setup task.
+- Do not implement later milestones without instruction.
+- Install Zustand when implementing the shared store, not during foundation setup.
+- Do not create empty architecture folders or speculative abstractions.
+- Run relevant lint, TypeScript and build checks before completing a change.
+- Preserve existing work. Do not commit, push, merge or deploy without explicit instruction.
+- Never inspect secret files or expose credentials. Non-secret example configuration may be inspected.
+- Keep `.agents/milestones/active.md` locally ignored. Use `milestone-workflow` only for “Run Active Milestone” and `milestone-authoring` when asked to create or revise a milestone.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
