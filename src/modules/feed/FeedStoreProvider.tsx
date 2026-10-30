@@ -7,8 +7,12 @@ import type { FeedStore } from "./feed.types";
 
 const FeedStoreContext = createContext<ReturnType<typeof createFeedStore> | null>(null);
 
-export function FeedStoreProvider({ children }: { children: ReactNode }) {
-  const [store] = useState(() => createFeedStore());
+export function FeedStoreProvider({ children, store: suppliedStore }: {
+  children: ReactNode;
+  store?: ReturnType<typeof createFeedStore>;
+}) {
+  // Capture once: tests can supply an isolated store without changing its lifetime.
+  const [store] = useState(() => suppliedStore ?? createFeedStore());
 
   useEffect(() => {
     void store.getState().loadFeed();

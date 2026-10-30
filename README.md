@@ -44,6 +44,8 @@ The [Task 3 evidence](docs/screenshots/task-03/README.md) records data-preparati
 checks and fresh captures confirming the UI remains unchanged.
 See [Task 4 evidence](docs/screenshots/task-04/README.md) for store integration
 checks and the available browser verification results or limitations.
+The [Task 5 evidence](docs/screenshots/task-05/README.md) separates new rendered
+integration/browser checks from historical evidence and remaining limitations.
 
 ## Commit messages
 
@@ -82,6 +84,7 @@ require CI or repository rules for remote enforcement; those are not configured.
 - `src/models/`: shared client entity and draft types; no UI or service logic.
 - `src/modules/feed/`: nested fixtures, normalization, service, vanilla store and React provider/hook.
 - `tests/unit/`: normalizer and store tests using Node's runner and `tsx`.
+- `tests/integration/`: real component rendering with React DOM, jsdom and controlled stores.
 - `public/samples/`: two locally bundled demo photos and their generation notes.
 
 Routes use the App Router and ordinary Next.js links. Route files and the root
@@ -95,6 +98,12 @@ No networking, API endpoints, database, authentication or persistence is impleme
 Five Heroicons SVG paths are bundled under their MIT license, without adding a
 package dependency. Glass styling is limited to the bottom navigation, with a
 near-opaque fallback and safe-area padding.
+
+See the [architecture walkthrough](docs/architecture.md) for concrete data flow,
+store lifetime, reference resolution, recovery paths and the Task 5 audit.
+`npm test` runs both unit and DOM integration tests. jsdom 29.1.1 supports the
+declared Node 22.13 minimum; newer jsdom releases require newer Node versions.
+These component tests do not replace real-browser route/history verification.
 
 ## Feed data preparation (Task 3)
 
