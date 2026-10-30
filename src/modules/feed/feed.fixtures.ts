@@ -1,6 +1,6 @@
 import type { NestedFeedInput } from "./feed.types";
 
-// Data-preparation samples, separate from the presentation samples until Task 4.
+// Temporary nested samples loaded through the feed service.
 // Empty profilePhotoUrl explicitly means a demo profile image is unavailable.
 export const feedFixture: NestedFeedInput = {
   feed: {

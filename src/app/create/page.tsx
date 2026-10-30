@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ComposerForm } from "@/components/ComposerForm";
-import { demoAuthor } from "@/demo/content";
 
 export const metadata: Metadata = { title: "Create a post · NewsFeed" };
 
@@ -12,7 +11,7 @@ export default function CreatePage() {
         <h1>Create a post</h1>
         <p className="muted">Start with a thought, a place, a little inspiration.</p>
       </div>
-      <ComposerForm author={demoAuthor} />
+      <ComposerForm />
     </>
   );
 }

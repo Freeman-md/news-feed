@@ -1,0 +1,24 @@
+"use client";
+
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useStore } from "zustand";
+import { createFeedStore } from "./feed.store";
+import type { FeedStore } from "./feed.types";
+
+const FeedStoreContext = createContext<ReturnType<typeof createFeedStore> | null>(null);
+
+export function FeedStoreProvider({ children }: { children: ReactNode }) {
+  const [store] = useState(() => createFeedStore());
+
+  useEffect(() => {
+    void store.getState().loadFeed();
+  }, [store]);
+
+  return <FeedStoreContext.Provider value={store}>{children}</FeedStoreContext.Provider>;
+}
+
+export function useFeedStore<T>(selector: (state: FeedStore) => T): T {
+  const store = useContext(FeedStoreContext);
+  if (!store) throw new Error("useFeedStore must be used within FeedStoreProvider");
+  return useStore(store, selector);
+}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { Header } from "@/components/Header";
+import { FeedStoreProvider } from "@/modules/feed/FeedStoreProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <a href="#main-content" className="skip-link">Skip to content</a>
           <Header />
           <main id="main-content" className="page-content" tabIndex={-1}>
-            {children}
+            <FeedStoreProvider>{children}</FeedStoreProvider>
           </main>
           <BottomNavigation />
         </div>

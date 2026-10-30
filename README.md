@@ -42,6 +42,8 @@ check results and limitations. See the [Task 2 evidence](docs/screenshots/task-0
 for the visual shell and three routes.
 The [Task 3 evidence](docs/screenshots/task-03/README.md) records data-preparation
 checks and fresh captures confirming the UI remains unchanged.
+See [Task 4 evidence](docs/screenshots/task-04/README.md) for store integration
+checks and the available browser verification results or limitations.
 
 ## Commit messages
 
@@ -76,22 +78,20 @@ require CI or repository rules for remote enforcement; those are not configured.
 - `src/app/{page,create/page,profile/page}.tsx`: assemble the three route views.
 - `src/app/globals.css`: Tailwind entry point, shared theme and responsive styles.
 - `src/components/`: header, navigation, post card, composer, initials avatar and icons.
-- `src/demo/content.ts`: fictional presentation samples, passed directly to views.
+- `src/demo/config.ts`: explicit demo user/feed IDs and presentation-only profile bio.
 - `src/models/`: shared client entity and draft types; no UI or service logic.
-- `src/modules/feed/`: temporary nested fixtures, feed result types, normalization and service.
-- `tests/unit/feed.normalize.test.ts`: Node unit tests, using `tsx` for TypeScript support.
+- `src/modules/feed/`: nested fixtures, normalization, service, vanilla store and React provider/hook.
+- `tests/unit/`: normalizer and store tests using Node's runner and `tsx`.
 - `public/samples/`: two locally bundled demo photos and their generation notes.
 
-Routes use the App Router and ordinary Next.js links. Only the navigation needs
-a Client Component, to read `usePathname` and expose the current route. The
-composer uses a native uncontrolled textarea: typing needs no React state or
-client boundary. Draft text is not persisted; browser or router restoration is
-not a draft-saving feature. Upload, Publish and Like controls are disabled.
+Routes use the App Router and ordinary Next.js links. Route files and the root
+layout remain Server Components. Navigation reads `usePathname`; feed, composer
+and profile content use Client Components to subscribe to shared state.
+Upload, Publish and Like controls remain disabled.
 
 The target architecture remains View → Store → Data access → Server. Shared
-models and a fixture-backed feed service now exist independently of the views.
-No shared store, networking, API endpoints, database, authentication or persistence
-is implemented. Zustand remains deferred.
+models and a fixture-backed feed service are integrated through Zustand 5.0.16.
+No networking, API endpoints, database, authentication or persistence is implemented.
 Five Heroicons SVG paths are bundled under their MIT license, without adding a
 package dependency. Glass styling is limited to the bottom navigation, with a
 near-opaque fallback and safe-area padding.
@@ -117,7 +117,37 @@ request, with its transport contract and adaptation defined then. The temporary
 nested types do not pre-approve that contract. No request or transport abstraction
 is implemented now.
 
-The UI deliberately continues to use `src/demo/content.ts`; it does not import
-the new models, fixtures or service. The two sample representations remain
-separate until Task 4 connects the UI. Fields for reactions, uploads and submission
-describe future state only; they do not enable those features.
+## Shared state and view integration (Task 4)
+
+`createFeedStore()` owns the canonical feed/entity collections, load status and
+composer draft. `loadFeed()` → `getFeed()` → `normalizeFeed()` → one state update
+→ subscribed views. The service owns fixture acquisition and normalization;
+components import neither the service nor fixtures. The store deduplicates
+concurrent loads, reuses a successful load, and exposes a safe error with manual
+retry. Loading, failure and retry preserve the draft.
+
+`FeedStoreProvider` creates a vanilla store once per mounted provider. It wraps
+route content in the shared root layout, so the same instance survives normal
+route navigation and Back/Forward. Server rendering and the first client render
+both start empty; a client effect triggers loading. Server Components never
+read or mutate the store, and there is no application-wide mutable singleton.
+This follows the [official Zustand Next.js guidance](https://zustand.docs.pmnd.rs/learn/guides/nextjs).
+
+`FeedPosts` subscribes to the configured feed's ordered `postIds`. Each `PostCard`
+resolves its post and canonical author; image children resolve their own media
+IDs. Selectors return existing records or primitives, not new arrays/objects.
+Readable timestamps (in UTC), initials and reaction labels are derived in the
+view. Composer and profile resolve the same explicit `DEMO_USER_ID`; there is
+no inferred viewer or authentication.
+
+`ComposerForm` controls its textarea with `composerDraft.body.text`.
+`setDraftText()` resets rich-text entities to an empty array and preserves the
+rest of the draft. Text stays during route navigation while the provider lives.
+A full refresh creates a fresh store and an empty draft; there is no localStorage
+or persistence middleware, and the UI offers no refresh-persistence guarantee.
+
+The duplicated author/post presentation samples and `PostCardProps` were removed.
+Only explicit demo IDs and the presentation-only bio remain in `src/demo/`;
+shared entity models and the Task 3 service/normalizer are unchanged. Fields for
+reactions, uploads and submission remain descriptive only: no action controls
+were enabled, and no publishing, pagination or background refresh was added.
